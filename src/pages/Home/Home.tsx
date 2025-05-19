@@ -11,7 +11,7 @@ import { useToken } from "../../contexts/Token";
 
 export const Home = () => {
   const { networkModal } = useNetwork();
-  const { newTokenModal } = useToken();
+  const { newTokenModal, selectedToken } = useToken();
   return (
     <Layout>
       <div className="w-full">
@@ -22,7 +22,7 @@ export const Home = () => {
       </div>
       {networkModal && <NetworkSwitchModal />}
       {newTokenModal && <NewTokenModal />}
-      <TokenDetailsModal />
+      {selectedToken && <TokenDetailsModal />}
     </Layout>
   );
 };
