@@ -3,6 +3,7 @@ import { ActionButtons } from "../../components/Home/ActionButtons";
 import { TokenList } from "../../components/Home/TokenList";
 import { WalletBalance } from "../../components/Home/WalletBalance";
 import { Layout } from "../../components/Layout/Layout";
+import { NetworkSwitchModal } from "../../components/UI/NetworkSwitchModal";
 
 export const Home = () => {
   return (
@@ -13,6 +14,7 @@ export const Home = () => {
         <ActionButtons />
         <TokenList />
       </div>
+      <NetworkSwitchModal />
     </Layout>
   );
 };
