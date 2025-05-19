@@ -1,8 +1,39 @@
 import { FaEthereum } from "react-icons/fa";
 import { IoIosFlash } from "react-icons/io";
 // import { NewTokenButton } from "./NewTokenButton";
+import { useAccount } from "wagmi";
+import { tokens } from "../../data/Tokens";
+import { useGetBalance, useGetEthBalance } from "../../hooks/useGetBalance";
+import { useEffect, useState } from "react";
+import { formatBalance } from "../../utils/formatBalance";
 
 export const TokenList = () => {
+  const [balanceHolder, setBalanceHolder] = useState<string | null>(null);
+  const [ethBalanceHolder, setEthBalanceHolder] = useState<string | null>(null);
+  const { address } = useAccount();
+  const balance = useGetBalance({
+    address: address as `0x${string}`,
+    tokenAddress: tokens[1].address as `0x${string}`,
+  });
+
+  const ethBalance = useGetEthBalance({
+    address: address as `0x${string}`,
+  });
+
+  useEffect(() => {
+    console.log(balance);
+    console.log(ethBalance);
+    if (balance) {
+      console.log("balance:", formatBalance(balance, 2));
+      setBalanceHolder(formatBalance(balance, 2));
+    }
+    if (ethBalance) {
+      const formattedEthBalance = formatBalance(ethBalance.value, 18);
+      console.log("ethBalance:", formattedEthBalance);
+      setEthBalanceHolder(formattedEthBalance);
+    }
+  }, [balance, ethBalance]);
+
   return (
     <div className="mb-5 mt-10 w-full">
       <div className=" cursor-pointer w-full flex items-center justify-between gap-2 my-2">
@@ -17,7 +48,9 @@ export const TokenList = () => {
         </div>
 
         <div>
-          <h3 className="text-md font-mono text-gray-400">3.3120502 ETH</h3>
+          <h3 className="text-md font-mono text-gray-400">
+            {ethBalanceHolder} ETH
+          </h3>
         </div>
       </div>
 
@@ -28,12 +61,14 @@ export const TokenList = () => {
           </div>
 
           <div>
-            <h3 className="text-md font-mono text-white">ZAP TOKEN</h3>
+            <h3 className="text-md font-mono text-white">MIND TOKEN</h3>
           </div>
         </div>
 
         <div>
-          <h3 className="text-md font-mono text-gray-400">50. 2012021 ZAP</h3>
+          <h3 className="text-md font-mono text-gray-400">
+            {balanceHolder} MND
+          </h3>
         </div>
       </div>
 

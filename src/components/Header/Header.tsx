@@ -1,4 +1,6 @@
 // import { useNetwork } from "../../contexts/Network";
+import { maskAddress } from "../../utils/maskAddress";
+import { useAccount } from "wagmi";
 
 export const Header = () => {
   // const { setNetworkModal } = useNetwork();
@@ -7,11 +9,15 @@ export const Header = () => {
   //   setNetworkModal(true);
   // };
 
+  const { address } = useAccount();
+
   return (
     <div className="w-full flex justify-between items-center">
       <div className="flex items-center gap-2">
         <img src="/avatar.png" alt="avatar" className="w-10 h-10 rounded-md" />
-        <h3 className="text-white text-xl font-mono">0x000...000</h3>
+        <h3 className="text-white text-xl font-mono">
+          {maskAddress(address as string)}
+        </h3>
       </div>
 
       <div className="cursor-pointer">
