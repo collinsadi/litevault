@@ -1,9 +1,11 @@
+import { useNetwork } from "../../contexts/Network";
 import { Modal } from "./Modal";
 import { MdLogout } from "react-icons/md";
 
 export const NetworkSwitchModal = () => {
+  const { setNetworkModal } = useNetwork();
   const handleClose = () => {
-    console.log("close");
+    setNetworkModal(false);
   };
   return (
     <Modal onClose={handleClose}>

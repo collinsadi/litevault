@@ -4,8 +4,10 @@ import { TokenList } from "../../components/Home/TokenList";
 import { WalletBalance } from "../../components/Home/WalletBalance";
 import { Layout } from "../../components/Layout/Layout";
 import { NetworkSwitchModal } from "../../components/UI/NetworkSwitchModal";
+import { useNetwork } from "../../contexts/Network";
 
 export const Home = () => {
+  const { networkModal } = useNetwork();
   return (
     <Layout>
       <div className="w-full">
@@ -14,7 +16,7 @@ export const Home = () => {
         <ActionButtons />
         <TokenList />
       </div>
-      <NetworkSwitchModal />
+      {networkModal && <NetworkSwitchModal />}
     </Layout>
   );
 };
