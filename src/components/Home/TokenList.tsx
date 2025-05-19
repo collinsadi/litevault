@@ -1,6 +1,6 @@
 import { FaEthereum } from "react-icons/fa";
 import { IoIosFlash } from "react-icons/io";
-import { NewTokenButton } from "./NewTokenButton";
+// import { NewTokenButton } from "./NewTokenButton";
 
 export const TokenList = () => {
   return (
@@ -37,7 +37,7 @@ export const TokenList = () => {
         </div>
       </div>
 
-      <NewTokenButton />
+      {/* <NewTokenButton /> */}
     </div>
   );
 };

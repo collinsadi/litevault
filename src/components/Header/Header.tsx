@@ -1,7 +1,12 @@
-import { useNetwork } from "../../contexts/Network";
+// import { useNetwork } from "../../contexts/Network";
 
 export const Header = () => {
-  const { setNetworkModal } = useNetwork();
+  // const { setNetworkModal } = useNetwork();
+
+  // const openModal = () => {
+  //   setNetworkModal(true);
+  // };
+
   return (
     <div className="w-full flex justify-between items-center">
       <div className="flex items-center gap-2">
@@ -9,7 +14,7 @@ export const Header = () => {
         <h3 className="text-white text-xl font-mono">0x000...000</h3>
       </div>
 
-      <div className="cursor-pointer" onClick={() => setNetworkModal(true)}>
+      <div className="cursor-pointer">
         <h3 className="text-lg font-mono text-gray-400">Ethereum Sepolia</h3>
       </div>
     </div>
