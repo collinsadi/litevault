@@ -1,10 +1,14 @@
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+// import { ConnectButton } from "@rainbow-me/rainbowkit";ƒ
 import { Layout } from "../Layout/Layout";
 import { SiLiteral } from "react-icons/si";
 import { NewWalletButton } from "./NewWalletButton";
 import { ImportWalletButton } from "./ImportWalletButton";
-import { ConnectWalletButton } from "./ConnectWalletButton";
+// import { ConnectWalletButton } from "./ConnectWalletButton";
+import { NewWalletModal } from "../UI/Auth/NewWalletModal";
+import { useWalletAuth } from "../../contexts/WalletAuth";
+
 export const Auth = () => {
+  const { showNewWalletModal } = useWalletAuth();
   return (
     <Layout>
       <div className="flex flex-col items-center  h-full font-mono">
@@ -20,6 +24,8 @@ export const Auth = () => {
           <ImportWalletButton />
           {/* <ConnectWalletButton /> */}
         </div>
+
+        {showNewWalletModal && <NewWalletModal />}
       </div>
     </Layout>
   );

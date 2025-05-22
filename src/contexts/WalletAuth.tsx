@@ -13,6 +13,7 @@ export function WalletAuthProvider({ children }: React.PropsWithChildren) {
   const [showNewWalletModal, setShowNewWalletModal] = useState<boolean>(false);
   const [showImportWalletModal, setShowImportWalletModal] =
     useState<boolean>(false);
+  const [showSeedPhrase, setShowSeedPhrase] = useState<boolean>(false);
   return (
     <WalletAuthContext.Provider
       value={{
@@ -26,6 +27,8 @@ export function WalletAuthProvider({ children }: React.PropsWithChildren) {
         setShowNewWalletModal,
         showImportWalletModal,
         setShowImportWalletModal,
+        showSeedPhrase,
+        setShowSeedPhrase,
       }}
     >
       {children}
