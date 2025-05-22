@@ -9,12 +9,11 @@ export const NetworkSwitchModal = () => {
     setNetworkModal(false);
   };
   const chainId = useChainId();
-  const { chains, switchChain } = useSwitchChain()
+  const { chains, switchChain } = useSwitchChain();
 
   const handleSwitchNetwork = (chainId: number) => {
     switchChain({ chainId });
 
-    console.log(chainId);
     setNetworkModal(false);
   };
 
