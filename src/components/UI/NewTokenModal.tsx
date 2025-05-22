@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ethers } from "ethers";
 import { useChainId, useReadContract } from "wagmi";
 import { erc20Abi } from "viem";
+import { useAuth } from "../../contexts/AuthContext";
 
 export const NewTokenModal = () => {
   const { setNewTokenModal } = useToken();
@@ -14,6 +15,8 @@ export const NewTokenModal = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const chainId = useChainId();
+  const { currentUser } = useAuth();
+  const userAddress = currentUser?.address;
 
   const [showMoreInfo, setShowMoreInfo] = useState<boolean>(false);
 
@@ -105,6 +108,7 @@ export const NewTokenModal = () => {
       symbol: tokenSymbol,
       decimals: tokenDecimals,
       chainId: chainId,
+      userAddress: userAddress,
     });
 
     localStorage.setItem("tokens", JSON.stringify(parsedExistingTokens));
@@ -116,6 +120,7 @@ export const NewTokenModal = () => {
         symbol: tokenSymbol,
         decimals: tokenDecimals,
         chainId: chainId,
+        userAddress: userAddress,
       },
     ]);
     setNewTokenModal(false);

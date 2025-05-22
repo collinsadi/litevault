@@ -13,6 +13,7 @@ interface Token {
   decimals: number;
   balance?: number;
   chainId: number;
+  userAddress: string;
 }
 
 export function TokenProvider({ children }: React.PropsWithChildren) {

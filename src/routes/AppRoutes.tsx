@@ -12,6 +12,7 @@ interface Token {
   symbol: string;
   decimals: number;
   chainId: number;
+  userAddress: string;
 }
 
 const AppRoutes = () => {
