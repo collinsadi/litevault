@@ -9,7 +9,7 @@ import { useWalletAuth } from "../../contexts/WalletAuth";
 import { EnterNewPasswordModal } from "../UI/Auth/EnterNewPasswordModal";
 
 export const Auth = () => {
-  const { showNewWalletModal } = useWalletAuth();
+  const { showNewWalletModal, showNewPasswordModal } = useWalletAuth();
   return (
     <Layout>
       <div className="flex flex-col items-center  h-full font-mono">
@@ -27,7 +27,7 @@ export const Auth = () => {
         </div>
 
         {showNewWalletModal && <NewWalletModal />}
-        <EnterNewPasswordModal />
+        {showNewPasswordModal && <EnterNewPasswordModal />}
       </div>
     </Layout>
   );
