@@ -17,7 +17,7 @@ export const LoadingAuth = () => {
   useEffect(() => {
     const checkAuth = async () => {
       const address = localStorage.getItem("0xaddress");
-      console.log(address);
+
       if (address) {
         try {
           // Check if IndexedDB exists and has data

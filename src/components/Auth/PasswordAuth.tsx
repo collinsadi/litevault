@@ -31,12 +31,10 @@ export const PasswordAuth = () => {
         setIsAuthenticated(true);
         setCurrentUser({ ...currentUser, password, seedPhrase: seedPhrase });
       } else {
-        console.log("No seed phrase found");
         setIsPasswordSet(false);
         setError("Invalid password");
       }
     } catch (error) {
-      console.log(error);
       setError("Invalid password");
     }
   };

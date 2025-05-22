@@ -21,15 +21,11 @@ export const TokenList = () => {
   });
 
   useEffect(() => {
-    console.log(balance);
-    console.log(ethBalance);
     if (balance) {
-      console.log("balance:", formatBalance(balance, 2));
       setBalanceHolder(formatBalance(balance, 2));
     }
     if (ethBalance) {
       const formattedEthBalance = formatBalance(ethBalance.value, 18);
-      console.log("ethBalance:", formattedEthBalance);
       setEthBalanceHolder(formattedEthBalance);
     }
   }, [balance, ethBalance]);

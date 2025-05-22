@@ -1,15 +1,14 @@
-// import { useNetwork } from "../../contexts/Network";
+import { useNetwork } from "../../contexts/Network";
+import { useAuth } from "../../contexts/AuthContext";
 import { maskAddress } from "../../utils/maskAddress";
-import { useAccount } from "wagmi";
 
 export const Header = () => {
-  // const { setNetworkModal } = useNetwork();
-
-  // const openModal = () => {
-  //   setNetworkModal(true);
-  // };
-
-  const { address } = useAccount();
+  const { setNetworkModal } = useNetwork();
+  const { currentUser } = useAuth();
+  const address = currentUser?.address;
+  const openModal = () => {
+    setNetworkModal(true);
+  };
 
   return (
     <div className="w-full flex justify-between items-center">
@@ -20,7 +19,7 @@ export const Header = () => {
         </h3>
       </div>
 
-      <div className="cursor-pointer">
+      <div onClick={openModal} className="cursor-pointer">
         <h3 className="text-lg font-mono text-gray-400">Ethereum Sepolia</h3>
       </div>
     </div>
