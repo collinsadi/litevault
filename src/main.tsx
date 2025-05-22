@@ -10,6 +10,8 @@ import { WagmiProvider } from "wagmi";
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { NetworkProvider } from "./contexts/Network.tsx";
 import { TokenProvider } from "./contexts/Token.tsx";
+import { ReceiveProvider } from "./contexts/Receive.tsx";
+import { WalletAuthProvider } from "./contexts/WalletAuth.tsx";
 import { config } from "./config/wagmi";
 
 const queryClient = new QueryClient();
@@ -21,7 +23,11 @@ createRoot(document.getElementById("root")!).render(
         <RainbowKitProvider>
           <NetworkProvider>
             <TokenProvider>
-              <App />
+              <ReceiveProvider>
+                <WalletAuthProvider>
+                  <App />
+                </WalletAuthProvider>
+              </ReceiveProvider>
             </TokenProvider>
           </NetworkProvider>
         </RainbowKitProvider>
