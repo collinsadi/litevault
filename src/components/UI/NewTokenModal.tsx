@@ -139,6 +139,8 @@ export const NewTokenModal = () => {
 
         <div className="w-full flex flex-col items-center justify-center my-10">
           <h3 className="text-3xl">NEW TOKEN</h3>
+
+          {error && <h3 className="text-red-500 mt-5">{error}</h3>}
         </div>
 
         <div className="w-full flex items-center justify-between border-b border-gray-700 pb-3 my-5">
