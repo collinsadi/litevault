@@ -4,7 +4,7 @@ export const networks = [
     name: "Ethereum Sepolia",
   },
   {
-    id: 1,
-    name: "Ethereum",
+    id: 4202,
+    name: "Lisk Testnet",
   },
 ];
