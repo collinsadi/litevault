@@ -17,15 +17,7 @@ interface Token {
 
 export function TokenProvider({ children }: React.PropsWithChildren) {
   const [newTokenModal, setNewTokenModal] = useState<boolean>(false);
-  const [tokens, setTokens] = useState<Token[]>([
-    {
-      name: "Ether",
-      symbol: "ETH",
-      decimals: 18,
-      address: "0x0000000000000000000000000000000000000000",
-      chainId: 11155111,
-    },
-  ]);
+  const [tokens, setTokens] = useState<Token[]>([]);
   const [chainId, setChainId] = useState<number>(11155111);
   const [selectedToken, setSelectedToken] = useState<Token | null>(null);
 

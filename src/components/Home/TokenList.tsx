@@ -24,7 +24,7 @@ export const TokenList = () => {
   const address = currentUser?.address;
   const chainId = useChainId();
 
-  const filteredTokens = tokens.slice(1).filter(
+  const filteredTokens = tokens.filter(
     (token: Token) => token.chainId === chainId
   );
 

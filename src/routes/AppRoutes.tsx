@@ -4,6 +4,7 @@ import { Auth } from "../components/Auth/Auth";
 import { useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useToken } from "../contexts/Token";
+import { useChainId, useSwitchChain } from "wagmi";
 
 interface Token {
   address: string;
@@ -16,7 +17,8 @@ interface Token {
 const AppRoutes = () => {
   const { isAuthenticated, setCurrentUser } = useAuth();
   const { setTokens, setChainId } = useToken();
-
+  const chainId = useChainId();
+  const { switchChain } = useSwitchChain();
   useEffect(() => {
     const address = localStorage.getItem("0xaddress");
     if (address && !isAuthenticated) {
@@ -26,21 +28,27 @@ const AppRoutes = () => {
         seedPhrase: "",
       });
     }
+  }, [isAuthenticated]);
 
+  useEffect(() => {
     if (isAuthenticated) {
       const tokens = localStorage.getItem("tokens");
-      const chainId = localStorage.getItem("chainId");
+      const localChainId = localStorage.getItem("chainId");
 
       if (tokens) {
         const parsedTokens = JSON.parse(tokens);
-        setTokens((prevTokens: Token[]) => [...prevTokens, ...parsedTokens]);
+        const filteredTokens = parsedTokens.filter(
+          (token: Token) => token.chainId === chainId
+        );
+        setTokens([...filteredTokens]);
       }
-      if (chainId) {
-        const parsedChainId = parseInt(chainId) || 11155111;
+      if (localChainId) {
+        const parsedChainId = parseInt(localChainId) || 11155111;
         setChainId(parsedChainId);
+        switchChain({ chainId: parsedChainId });
       }
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, chainId]);
 
   return (
     <Router>
