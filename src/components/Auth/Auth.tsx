@@ -9,9 +9,10 @@ import { useWalletAuth } from "../../contexts/WalletAuth";
 import { EnterNewPasswordModal } from "../UI/Auth/EnterNewPasswordModal";
 import { useAuth } from "../../contexts/AuthContext";
 import { LoadingAuth } from "./LoadingAuth";
-
+import { ImportWalletModal } from "../UI/Auth/ImportWalletModal";
 export const Auth = () => {
-  const { showNewWalletModal, showNewPasswordModal } = useWalletAuth();
+  const { showNewWalletModal, showNewPasswordModal, showImportWalletModal } =
+    useWalletAuth();
   const { isAuthenticated } = useAuth();
   if (isAuthenticated === null) {
     return <LoadingAuth />;
@@ -35,6 +36,7 @@ export const Auth = () => {
 
         {showNewWalletModal && <NewWalletModal />}
         {showNewPasswordModal && <EnterNewPasswordModal />}
+        {showImportWalletModal && <ImportWalletModal />}
       </div>
     </Layout>
   );

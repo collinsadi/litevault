@@ -9,7 +9,9 @@ export function useWalletAuth() {
 export function WalletAuthProvider({ children }: React.PropsWithChildren) {
   const [seedPhrase, setSeedPhrase] = useState<string[]>([]);
   const [privateKey, setPrivateKey] = useState<string>("");
-  const [address, setAddress] = useState<string>("0x0000000000000000000000000000000000000000");
+  const [address, setAddress] = useState<string>(
+    "0x0000000000000000000000000000000000000000"
+  );
   const [showNewWalletModal, setShowNewWalletModal] = useState<boolean>(false);
   const [showImportWalletModal, setShowImportWalletModal] =
     useState<boolean>(false);
@@ -18,6 +20,7 @@ export function WalletAuthProvider({ children }: React.PropsWithChildren) {
   const [success, setSuccess] = useState<string | null>(null);
   const [showNewPasswordModal, setShowNewPasswordModal] =
     useState<boolean>(false);
+
   return (
     <WalletAuthContext.Provider
       value={{
