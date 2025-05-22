@@ -1,13 +1,11 @@
-import { getDefaultConfig } from "@rainbow-me/rainbowkit";
+import { http, createConfig } from "wagmi";
 import { sepolia } from "wagmi/chains";
+import { injected, metaMask, safe } from "wagmi/connectors";
 
-export const config = getDefaultConfig({
-  appName: "Lite Vault",
-  projectId: "11111111111111111111111111111111",
+export const config = createConfig({
   chains: [sepolia],
-  ssr: true,
-
+  connectors: [injected(), metaMask(), safe()],
+  transports: {
+    [sepolia.id]: http(),
+  },
 });
-
-
-// 341673c77baaa234f61c1d08419c2b94

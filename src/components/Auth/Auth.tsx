@@ -6,6 +6,7 @@ import { ImportWalletButton } from "./ImportWalletButton";
 // import { ConnectWalletButton } from "./ConnectWalletButton";
 import { NewWalletModal } from "../UI/Auth/NewWalletModal";
 import { useWalletAuth } from "../../contexts/WalletAuth";
+import { EnterNewPasswordModal } from "../UI/Auth/EnterNewPasswordModal";
 
 export const Auth = () => {
   const { showNewWalletModal } = useWalletAuth();
@@ -26,6 +27,7 @@ export const Auth = () => {
         </div>
 
         {showNewWalletModal && <NewWalletModal />}
+        <EnterNewPasswordModal />
       </div>
     </Layout>
   );

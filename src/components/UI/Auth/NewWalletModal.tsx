@@ -12,7 +12,6 @@ export const NewWalletModal = () => {
   const {
     setShowNewWalletModal,
     seedPhrase,
-    error,
     setShowSeedPhrase,
     showSeedPhrase,
   } = useWalletAuth();

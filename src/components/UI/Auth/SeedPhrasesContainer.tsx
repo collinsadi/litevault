@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import { generateWallet } from "../../../utils/wallet/generateWallet";
 
 export const SeedPhrasesContainer = () => {
-  const { seedPhrase, setSeedPhrase, error, setError } = useWalletAuth();
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState<string | null>(null);
+  const { seedPhrase, setSeedPhrase, error, setError, setAddress } =
+    useWalletAuth();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const generateSeedPhrase = async () => {
@@ -16,6 +16,7 @@ export const SeedPhrasesContainer = () => {
         const phrase = wallet.mnemonic?.phrase.split(" ");
 
         setSeedPhrase(phrase);
+        setAddress(wallet.address);
       } catch (error) {
         setError("Error generating wallet");
       } finally {
@@ -41,7 +42,6 @@ export const SeedPhrasesContainer = () => {
         </div>
       )}
       {error && <p>{error}</p>}
-      {success && <p>{success}</p>}
     </div>
   );
 };
