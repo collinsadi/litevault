@@ -1,12 +1,11 @@
 import { FaEthereum } from "react-icons/fa";
-import { IoIosFlash } from "react-icons/io";
 import { NewTokenButton } from "./NewTokenButton";
-import { useGetBalance, useGetEthBalance } from "../../hooks/useGetBalance";
+import { useGetEthBalance } from "../../hooks/useGetBalance";
 import { useEffect, useState } from "react";
 import { formatBalance } from "../../utils/formatBalance";
 import { useAuth } from "../../contexts/AuthContext";
-import { formatBalanceWithCommas } from "../../utils/formatBalance";
 import { useToken } from "../../contexts/Token";
+import { TokenRow } from "./TokenRow";
 
 interface Token {
   address: string;
@@ -28,14 +27,6 @@ export const TokenList = () => {
     address: address as `0x${string}`,
   });
 
-  // Get balances for all tokens except ETH
-  const tokenBalances = tokens.slice(1).map((token: Token) => {
-    return useGetBalance({
-      address: address as `0x${string}`,
-      tokenAddress: token.address as `0x${string}`,
-    });
-  });
-
   useEffect(() => {
     const newBalances: { [key: string]: string | null } = {};
 
@@ -44,18 +35,10 @@ export const TokenList = () => {
       newBalances["ETH"] = formatBalance(ethBalance.value, 18);
     }
 
-    // Format token balances
-    tokenBalances.forEach((balance: any, index: number) => {
-      if (balance) {
-        const token = tokens[index + 1]; // +1 because we skipped ETH
-        newBalances[token.symbol] = formatBalance(balance, token.decimals);
-      }
-    });
-
     if (JSON.stringify(newBalances) !== JSON.stringify(balances)) {
       setBalances(newBalances);
     }
-  }, [ethBalance, tokenBalances]);
+  }, [ethBalance]);
 
   return (
     <div className="mb-5 mt-10 w-full">
@@ -78,25 +61,11 @@ export const TokenList = () => {
 
       {/* Other Tokens */}
       {tokens.slice(1).map((token: Token) => (
-        <div
+        <TokenRow
           key={token.address}
-          className="cursor-pointer w-full flex items-center justify-between gap-2 my-2"
-        >
-          <div className="flex items-center gap-4">
-            <div className="w-[40px] h-[40px] bg-[#F47E60] rounded-md flex items-center justify-center">
-              <IoIosFlash size={20} color="black" />
-            </div>
-            <div>
-              <h3 className="text-md font-mono text-white">{token.name}</h3>
-            </div>
-          </div>
-          <div>
-            <h3 className="text-md font-mono text-gray-400">
-              {formatBalanceWithCommas(balances[token.symbol] || "0")}{" "}
-              {token.symbol}
-            </h3>
-          </div>
-        </div>
+          token={token}
+          userAddress={address as `0x${string}`}
+        />
       ))}
 
       <NewTokenButton />

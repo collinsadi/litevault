@@ -25,14 +25,6 @@ export function TokenProvider({ children }: React.PropsWithChildren) {
       address: "0x0000000000000000000000000000000000000000",
       chainId: 11155111,
     },
-
-    {
-      address: "0x97c348048115c7967F2BCB93CA0F947122D219b1",
-      name: "Mind Token",
-      symbol: "MND",
-      decimals: 2,
-      chainId: 11155111,
-    },
   ]);
   const [chainId, setChainId] = useState<number>(11155111);
   const [selectedToken, setSelectedToken] = useState<Token | null>(null);

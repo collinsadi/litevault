@@ -5,6 +5,14 @@ import { useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useToken } from "../contexts/Token";
 
+interface Token {
+  address: string;
+  name: string;
+  symbol: string;
+  decimals: number;
+  chainId: number;
+}
+
 const AppRoutes = () => {
   const { isAuthenticated, setCurrentUser } = useAuth();
   const { setTokens, setChainId } = useToken();
@@ -22,11 +30,14 @@ const AppRoutes = () => {
     if (isAuthenticated) {
       const tokens = localStorage.getItem("tokens");
       const chainId = localStorage.getItem("chainId");
+
       if (tokens) {
-        setTokens(JSON.parse(tokens));
+        const parsedTokens = JSON.parse(tokens);
+        setTokens((prevTokens: Token[]) => [...prevTokens, ...parsedTokens]);
       }
       if (chainId) {
-        setChainId(parseInt(chainId));
+        const parsedChainId = parseInt(chainId) || 11155111;
+        setChainId(parsedChainId);
       }
     }
   }, [isAuthenticated]);
