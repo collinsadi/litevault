@@ -1,4 +1,4 @@
-import { encrypt, decrypt } from "../encryption/encryption";
+import { encryptData, decryptData } from "../encryption/keyDerivation";
 
 const DB_NAME = "litevault";
 const STORE_NAME = "vault";
@@ -24,11 +24,12 @@ export const saveSeedPhrase = async (
   seedPhrase: string,
   password: string
 ): Promise<void> => {
+  const encrypted = await encryptData(seedPhrase, password);
+
   const db = await openDB();
   const tx = db.transaction(STORE_NAME, "readwrite");
   const store = tx.objectStore(STORE_NAME);
 
-  const encrypted = encrypt(seedPhrase, password);
   store.put({ id: KEY_ID, value: encrypted });
 
   return new Promise((resolve, reject) => {
@@ -48,11 +49,11 @@ export const getSeedPhrase = async (
   return new Promise((resolve, reject) => {
     const request = store.get(KEY_ID);
 
-    request.onsuccess = () => {
+    request.onsuccess = async () => {
       if (!request.result) return resolve(null);
 
       try {
-        const decrypted = decrypt(request.result.value, password);
+        const decrypted = await decryptData(request.result.value, password);
         resolve(decrypted);
       } catch (err) {
         reject(new Error("Invalid password or corrupted data"));

@@ -7,9 +7,16 @@ import { ImportWalletButton } from "./ImportWalletButton";
 import { NewWalletModal } from "../UI/Auth/NewWalletModal";
 import { useWalletAuth } from "../../contexts/WalletAuth";
 import { EnterNewPasswordModal } from "../UI/Auth/EnterNewPasswordModal";
+import { useAuth } from "../../contexts/AuthContext";
+import { LoadingAuth } from "./LoadingAuth";
 
 export const Auth = () => {
   const { showNewWalletModal, showNewPasswordModal } = useWalletAuth();
+  const { isAuthenticated } = useAuth();
+  if (isAuthenticated === null) {
+    return <LoadingAuth />;
+  }
+
   return (
     <Layout>
       <div className="flex flex-col items-center  h-full font-mono">

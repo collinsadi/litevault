@@ -1,17 +1,19 @@
 import { useWalletAuth } from "../../../contexts/WalletAuth";
-import { encrypt, hashPassword } from "../../../utils/encryption/encryption";
+import { useAuth } from "../../../contexts/AuthContext";
+
 import { saveSeedPhrase } from "../../../utils/storage/indexedDB";
 
 export const SetPasswordButton = ({ password }: { password: string }) => {
-  const { seedPhrase } = useWalletAuth();
-
-  const handleSetPassword = () => {
+  const { seedPhrase, address } = useWalletAuth();
+  const { setCurrentUser, currentUser, setIsPasswordSet, setIsAuthenticated } =
+    useAuth();
+  const handleSetPassword = async () => {
     const joinedSeedPhrase = seedPhrase.join(" ");
-    const hashedPassword = hashPassword(password);
     saveSeedPhrase(joinedSeedPhrase, password);
-    console.log(hashedPassword);
-    const encrypted = encrypt(password, joinedSeedPhrase);
-    console.log(encrypted);
+    localStorage.setItem("0xaddress", address);
+    setIsPasswordSet(true);
+    setIsAuthenticated(true);
+    setCurrentUser({ ...currentUser, password, seedPhrase: joinedSeedPhrase });
   };
 
   return (
