@@ -13,7 +13,12 @@ export const SetPasswordButton = ({ password }: { password: string }) => {
     localStorage.setItem("0xaddress", address);
     setIsPasswordSet(true);
     setIsAuthenticated(true);
-    setCurrentUser({ ...currentUser, password, seedPhrase: joinedSeedPhrase });
+    setCurrentUser({
+      ...currentUser,
+      password,
+      seedPhrase: joinedSeedPhrase,
+      address,
+    });
   };
 
   return (

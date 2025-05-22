@@ -3,9 +3,11 @@ import { Home } from "../pages/Home/Home";
 import { Auth } from "../components/Auth/Auth";
 import { useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import { useToken } from "../contexts/Token";
 
 const AppRoutes = () => {
   const { isAuthenticated, setCurrentUser } = useAuth();
+  const { setTokens, setChainId } = useToken();
 
   useEffect(() => {
     const address = localStorage.getItem("0xaddress");
@@ -15,6 +17,17 @@ const AppRoutes = () => {
         password: null,
         seedPhrase: "",
       });
+    }
+
+    if (isAuthenticated) {
+      const tokens = localStorage.getItem("tokens");
+      const chainId = localStorage.getItem("chainId");
+      if (tokens) {
+        setTokens(JSON.parse(tokens));
+      }
+      if (chainId) {
+        setChainId(parseInt(chainId));
+      }
     }
   }, [isAuthenticated]);
 

@@ -1,12 +1,12 @@
-import { useAccount } from "wagmi";
 import { formatBalance } from "../../utils/formatBalance";
 import { useGetEthBalance } from "../../hooks/useGetBalance";
 import { useEffect, useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
 export const WalletBalance = () => {
   const [ethBalanceHolder, setEthBalanceHolder] = useState<string | null>(null);
-  const { address } = useAccount();
+  const { currentUser } = useAuth();
   const ethBalance = useGetEthBalance({
-    address: address as `0x${string}`,
+    address: currentUser?.address as `0x${string}`,
   });
 
   useEffect(() => {
