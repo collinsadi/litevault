@@ -1,14 +1,18 @@
 import { Modal } from "../Modal";
 import { useWalletAuth } from "../../../contexts/WalletAuth";
-import { SeedWordContainer } from "./SeedWordContainer";
 import { IoCopyOutline, IoCheckmarkOutline } from "react-icons/io5";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
+import { FaRegCircle, FaRegCheckCircle } from "react-icons/fa";
+import { LockedInButton } from "./LockedInButton";
+import { SeedPhrasesContainer } from "./SeedPhrasesContainer";
 export const NewWalletModal = () => {
   const [copied, setCopied] = useState(false);
+  const [acknowledged, setAcknowledged] = useState(false);
   const {
     setShowNewWalletModal,
     seedPhrase,
+    error,
     setShowSeedPhrase,
     showSeedPhrase,
   } = useWalletAuth();
@@ -21,23 +25,12 @@ export const NewWalletModal = () => {
     setShowSeedPhrase(!showSeedPhrase);
   };
 
-  const seedWords = [
-    "Whisper",
-    "Whisper",
-    "Whisper",
-    "Whisper",
-    "Whisper",
-    "Whisper",
-    "Whisper",
-    "Whisper",
-    "Whisper",
-    "Whisper",
-    "Whisper",
-    "Whisper",
-  ];
+  const handleAcknowledgement = () => {
+    setAcknowledged(!acknowledged);
+  };
 
   const handleCopySeedPhrase = () => {
-    navigator.clipboard.writeText(seedWords.join(" "));
+    navigator.clipboard.writeText(seedPhrase.join(" "));
 
     setCopied(true);
     setTimeout(() => {
@@ -62,7 +55,7 @@ export const NewWalletModal = () => {
           </button>
         </div>
 
-        <div className="w-full flex flex-col justify-center my-10">
+        <div className="w-full flex flex-col justify-center my-5">
           <h3 className="text-3xl ">
             Your 12-Word <br /> Recovery Phrase
           </h3>
@@ -71,29 +64,53 @@ export const NewWalletModal = () => {
           </p>
         </div>
 
-        <div className="w-full flex  items-center justify-center gap-2 flex-wrap">
-          {seedWords.map((word, index) => (
-            <SeedWordContainer key={index} word={word} index={index + 1} />
-          ))}
-        </div>
+        <SeedPhrasesContainer />
 
-        <div className="w-full flex items-center justify-end gap-2 my-5 px-5">
-          <div
-            onClick={handleCopySeedPhrase}
-            className="w-fit bg-white rounded-md p-3 text-black flex items-center justify-center gap-2 cursor-pointer"
-          >
-            {copied && <p className="text-sm text-green-600">Copied</p>}
-            {!copied ? <IoCopyOutline /> : <IoCheckmarkOutline color="green" />}
-          </div>
+        {seedPhrase.length > 0 && (
+          <>
+            <div className="w-full flex items-center justify-end gap-2 my-5 px-5">
+              <div
+                onClick={handleCopySeedPhrase}
+                className="w-fit bg-white rounded-md p-3 text-black flex items-center justify-center gap-2 cursor-pointer"
+              >
+                {copied && <p className="text-sm text-green-600">Copied</p>}
+                {!copied ? (
+                  <IoCopyOutline />
+                ) : (
+                  <IoCheckmarkOutline color="green" />
+                )}
+              </div>
 
-          <div
-            onClick={toggleSeedPhraseView}
-            className="w-fit bg-white rounded-md p-2 text-black flex items-center justify-center gap-2 cursor-pointer"
-          >
-            <p>{!showSeedPhrase ? "Hide" : "Reveal"}</p>
-            {!showSeedPhrase ? <FaEyeSlash /> : <FaEye />}
-          </div>
-        </div>
+              <div
+                onClick={toggleSeedPhraseView}
+                className="w-fit bg-white rounded-md p-2 text-black flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <p>{!showSeedPhrase ? "Hide" : "Reveal"}</p>
+                {!showSeedPhrase ? <FaEyeSlash /> : <FaEye />}
+              </div>
+            </div>
+
+            {/* Full Control Acknowledgement */}
+            <div
+              onClick={handleAcknowledgement}
+              className="w-full flex items-start justify-center gap-3 cursor-pointer"
+            >
+              <span>
+                {acknowledged ? (
+                  <FaRegCheckCircle className="text-green-600" />
+                ) : (
+                  <FaRegCircle className="text-gray-400" />
+                )}
+              </span>
+              <p className="text-sm text-gray-400">
+                I Acknowledge that I have full control over my wallet, and It
+                can not be recovered by anyone else, not even LiteVault.
+              </p>
+            </div>
+
+            <LockedInButton acknowledged={acknowledged} />
+          </>
+        )}
       </div>
     </Modal>
   );
