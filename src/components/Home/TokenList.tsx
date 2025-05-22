@@ -6,6 +6,7 @@ import { formatBalance } from "../../utils/formatBalance";
 import { useAuth } from "../../contexts/AuthContext";
 import { useToken } from "../../contexts/Token";
 import { TokenRow } from "./TokenRow";
+import { useChainId } from "wagmi";
 
 interface Token {
   address: string;
@@ -21,6 +22,11 @@ export const TokenList = () => {
   );
   const { currentUser } = useAuth();
   const address = currentUser?.address;
+  const chainId = useChainId();
+
+  const filteredTokens = tokens.slice(1).filter(
+    (token: Token) => token.chainId === chainId
+  );
 
   // Get ETH balance
   const ethBalance = useGetEthBalance({
@@ -60,7 +66,7 @@ export const TokenList = () => {
       </div>
 
       {/* Other Tokens */}
-      {tokens.slice(1).map((token: Token) => (
+      {filteredTokens.map((token: Token) => (
         <TokenRow
           key={token.address}
           token={token}
