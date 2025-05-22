@@ -1,9 +1,7 @@
-// import { ConnectButton } from "@rainbow-me/rainbowkit";ƒ
 import { Layout } from "../Layout/Layout";
 import { SiLiteral } from "react-icons/si";
 import { NewWalletButton } from "./NewWalletButton";
 import { ImportWalletButton } from "./ImportWalletButton";
-// import { ConnectWalletButton } from "./ConnectWalletButton";
 import { NewWalletModal } from "../UI/Auth/NewWalletModal";
 import { useWalletAuth } from "../../contexts/WalletAuth";
 import { EnterNewPasswordModal } from "../UI/Auth/EnterNewPasswordModal";

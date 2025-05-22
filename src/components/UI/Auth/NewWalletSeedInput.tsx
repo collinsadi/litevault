@@ -2,11 +2,23 @@ export const NewWalletSeedInput = ({
   word,
   index,
   setWord,
+  onPaste,
 }: {
   word: string;
   index: number;
   setWord: (word: string) => void;
+  onPaste: (words: string[]) => void;
 }) => {
+  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const pastedText = e.clipboardData.getData("text");
+    const words = pastedText.trim().split(/\s+/);
+
+    if (words.length > 0) {
+      onPaste(words);
+    }
+  };
+
   return (
     <div className="w-fit bg-white rounded-md p-2 text-black flex items-center justify-center gap-2 relative">
       {/* <div
@@ -20,6 +32,7 @@ export const NewWalletSeedInput = ({
         className="text-sm bg-transparent outline-none"
         value={word}
         onChange={(e) => setWord(e.target.value)}
+        onPaste={handlePaste}
       />
     </div>
   );

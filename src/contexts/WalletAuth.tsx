@@ -21,6 +21,21 @@ export function WalletAuthProvider({ children }: React.PropsWithChildren) {
   const [showNewPasswordModal, setShowNewPasswordModal] =
     useState<boolean>(false);
 
+  const [words, setWords] = useState<string[]>([
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+  ]);
+
   return (
     <WalletAuthContext.Provider
       value={{
@@ -42,6 +57,8 @@ export function WalletAuthProvider({ children }: React.PropsWithChildren) {
         setSuccess,
         showNewPasswordModal,
         setShowNewPasswordModal,
+        words,
+        setWords,
       }}
     >
       {children}

@@ -2,17 +2,14 @@ import { Modal } from "../Modal";
 import { useWalletAuth } from "../../../contexts/WalletAuth";
 import { useState } from "react";
 import { FaRegCheckCircle, FaRegCircle } from "react-icons/fa";
-import { LockedInButton } from "./LockedInButton";
 import { NewSeedPhraseInputContainer } from "./NewSeedPhraseInputContainer";
+import { LoginLockedInButton } from "./LoginLockedInButton";
 export const ImportWalletModal = () => {
   const [acknowledged, setAcknowledged] = useState(false);
-  const {
-    setShowImportWalletModal,
-
-    seedPhrase,
-  } = useWalletAuth();
+  const { setShowImportWalletModal, setError } = useWalletAuth();
 
   const handleClose = () => {
+    setError(null);
     setShowImportWalletModal(false);
   };
 
@@ -48,29 +45,25 @@ export const ImportWalletModal = () => {
 
         <NewSeedPhraseInputContainer />
 
-        {seedPhrase.length > 0 && (
-          <>
-            {/* Full Control Acknowledgement */}
-            <div
-              onClick={handleAcknowledgement}
-              className="w-full flex items-start justify-center gap-3 cursor-pointer"
-            >
-              <span>
-                {acknowledged ? (
-                  <FaRegCheckCircle className="text-green-600" />
-                ) : (
-                  <FaRegCircle className="text-gray-400" />
-                )}
-              </span>
-              <p className="text-sm text-gray-400">
-                I Acknowledge that I have full control over my wallet, and It
-                can not be recovered by anyone else, not even LiteVault.
-              </p>
-            </div>
+        {/* Full Control Acknowledgement */}
+        <div
+          onClick={handleAcknowledgement}
+          className="w-full flex items-start justify-center gap-3 cursor-pointer"
+        >
+          <span>
+            {acknowledged ? (
+              <FaRegCheckCircle className="text-green-600" />
+            ) : (
+              <FaRegCircle className="text-gray-400" />
+            )}
+          </span>
+          <p className="text-sm text-gray-400">
+            I Acknowledge that I have full control over my wallet, and It can
+            not be recovered by anyone else, not even LiteVault.
+          </p>
+        </div>
 
-            <LockedInButton acknowledged={acknowledged} />
-          </>
-        )}
+        <LoginLockedInButton acknowledged={acknowledged} />
       </div>
     </Modal>
   );

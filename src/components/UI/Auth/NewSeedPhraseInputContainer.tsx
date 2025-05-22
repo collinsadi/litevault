@@ -1,24 +1,32 @@
 import { useWalletAuth } from "../../../contexts/WalletAuth";
-import { useEffect, useState } from "react";
-// import { generateWallet } from "../../../utils/wallet/generateWallet";
+import { useEffect } from "react";
 import { NewWalletSeedInput } from "./NewWalletSeedInput";
+
 export const NewSeedPhraseInputContainer = () => {
-  const { seedPhrase, error } = useWalletAuth();
-  //   const [loading, setLoading] = useState(true);
-  const [words, setWords] = useState<string[]>([
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-  ]);
+  const {error,words, setWords } = useWalletAuth();
+
+
+
+  const handleWordChange = (index: number, word: string) => {
+    setWords((prev: string[]) => {
+      const newWords = [...prev];
+      newWords[index] = word;
+      return newWords;
+    });
+  };
+
+  const handlePaste = (pastedWords: string[]) => {
+    setWords((prev: string[]) => {
+      const newWords = [...prev];
+
+      pastedWords.forEach((word, index) => {
+        if (index < newWords.length) {
+          newWords[index] = word;
+        }
+      });
+      return newWords;
+    });
+  };
 
   useEffect(() => {}, []);
   return (
@@ -28,17 +36,12 @@ export const NewSeedPhraseInputContainer = () => {
           key={index}
           word={word}
           index={index + 1}
-          setWord={(word: string) =>
-            setWords((prev) => {
-              const newWords = [...prev];
-              newWords[index] = word;
-              return newWords;
-            })
-          }
+          setWord={(word: string) => handleWordChange(index, word)}
+          onPaste={handlePaste}
         />
       ))}
 
-      {error && <p>{error}</p>}
+      {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
     </div>
   );
 };

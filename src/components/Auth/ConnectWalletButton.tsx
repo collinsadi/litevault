@@ -8,12 +8,9 @@ export const ConnectWalletButton = () => {
         chain,
         openAccountModal,
         openChainModal,
-        openConnectModal,
         authenticationStatus,
         mounted,
       }) => {
-        // Note: If your app doesn't use authentication, you
-        // can remove all 'authenticationStatus' checks
         const ready = mounted && authenticationStatus !== "loading";
         const connected =
           ready &&
@@ -35,11 +32,9 @@ export const ConnectWalletButton = () => {
             {(() => {
               if (!connected) {
                 return (
-                  
-                    <button className="w-full bg-white text-black px-4 py-2 rounded-md cursor-pointer hover:scale-105 transition-all duration-300 my-3">
-                      Connect Wallet
-                    </button>
-                  
+                  <button className="w-full bg-white text-black px-4 py-2 rounded-md cursor-pointer hover:scale-105 transition-all duration-300 my-3">
+                    Connect Wallet
+                  </button>
                 );
               }
 
@@ -55,7 +50,11 @@ export const ConnectWalletButton = () => {
                 <div style={{ display: "flex", gap: 12, width: "100%" }}>
                   <button
                     onClick={openChainModal}
-                    style={{ display: "flex", alignItems: "center", width: "100%" }}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      width: "100%",
+                    }}
                     type="button"
                   >
                     {chain.hasIcon && (
